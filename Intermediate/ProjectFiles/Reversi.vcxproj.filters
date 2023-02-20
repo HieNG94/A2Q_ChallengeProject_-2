@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\Reversi.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{BB6DAEC0-0378-42E8-9030-DFCB500508A8}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Reversi.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\ReversiEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{D817DD1F-E772-4684-9810-D8D34DF55EC0}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\Reversi">
+      <UniqueIdentifier>{0AE4FEAC-3B71-4A3E-8939-17F6CE485BA1}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\Reversi\Reversi.Build.cs">
+      <Filter>Source\Reversi</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\Reversi\Reversi.cpp">
+      <Filter>Source\Reversi</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Reversi\Reversi.h">
+      <Filter>Source\Reversi</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Reversi\ReversiBase.cpp">
+      <Filter>Source\Reversi</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Reversi\ReversiBase.h">
+      <Filter>Source\Reversi</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Reversi\ReversiGameModeBase.cpp">
+      <Filter>Source\Reversi</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Reversi\ReversiGameModeBase.h">
+      <Filter>Source\Reversi</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Reversi\ReversiPlayerController.cpp">
+      <Filter>Source\Reversi</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Reversi\ReversiPlayerController.h">
+      <Filter>Source\Reversi</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Reversi\ReversiTile.cpp">
+      <Filter>Source\Reversi</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Reversi\ReversiTile.h">
+      <Filter>Source\Reversi</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

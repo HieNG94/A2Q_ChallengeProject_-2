@@ -1,0 +1,21 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-Reversi-0004.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\Reversi.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\ReversiBase.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\ReversiGameModeBase.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\ReversiPlayerController.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\ReversiTile.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\Reversi.init.gen.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\ReversiBase.gen.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\ReversiGameModeBase.gen.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\ReversiPlayerController.gen.cpp.obj"
+"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\ReversiTile.gen.cpp.obj"
+"C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Development\Default.rc2.res"
+/OUT:"C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi-0004.lib"

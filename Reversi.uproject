@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{64DD0BA8-4AB1-9096-66B6-24BBD033106D}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Reversi",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	]
+}

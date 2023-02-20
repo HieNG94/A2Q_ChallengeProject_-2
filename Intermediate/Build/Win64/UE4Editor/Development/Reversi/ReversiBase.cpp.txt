@@ -1,0 +1,10 @@
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\Definitions.Reversi.h
+C:\Unreal Project\Reversi\Source\Reversi\ReversiBase.h
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiBase.generated.h
+C:\Unreal Project\Reversi\Source\Reversi\ReversiTile.h
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiTile.generated.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\Kismet/KismetSystemLibrary.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/PropertyAccessUtil.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\KismetSystemLibrary.generated.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\Camera/CameraComponent.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\CameraComponent.generated.h

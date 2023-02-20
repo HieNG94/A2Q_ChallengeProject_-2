@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Unreal Project\\Reversi\\Source\\Reversi\\Reversi.Build.cs",
+		"C:\\Unreal Project\\Reversi\\Source\\Reversi.Target.cs",
+		"C:\\Unreal Project\\Reversi\\Source\\ReversiEditor.Target.cs"
+	],
+	"EngineVersion": "4.27.2"
+}

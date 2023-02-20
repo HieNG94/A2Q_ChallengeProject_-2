@@ -1,0 +1,5 @@
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\Definitions.Reversi.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+C:\Unreal Project\Reversi\Source\Reversi/ReversiPlayerController.h
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiPlayerController.generated.h

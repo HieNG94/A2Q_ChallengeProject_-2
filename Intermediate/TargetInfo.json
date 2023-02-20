@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Reversi",
+			"Path": "C:\\Unreal Project\\Reversi\\Source\\Reversi.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "ReversiEditor",
+			"Path": "C:\\Unreal Project\\Reversi\\Source\\ReversiEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

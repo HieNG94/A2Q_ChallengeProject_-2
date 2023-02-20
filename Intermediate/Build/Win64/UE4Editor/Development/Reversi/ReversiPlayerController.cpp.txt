@@ -1,0 +1,3 @@
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\Definitions.Reversi.h
+C:\Unreal Project\Reversi\Source\Reversi\ReversiPlayerController.h
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiPlayerController.generated.h
