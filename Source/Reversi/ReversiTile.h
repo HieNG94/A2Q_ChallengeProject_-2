@@ -38,6 +38,7 @@ public:
 	void PlaceWhiteDisc();
 	void PlaceBlackDisc();
 	void UpdateDiscs();
+	int32 GetNumOfHit();
 
 	UFUNCTION()
 		void TileClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);

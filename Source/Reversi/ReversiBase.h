@@ -16,38 +16,41 @@ public:
 	AReversiBase();
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UStaticMeshComponent* BoardBase;
+	class UStaticMeshComponent* BoardBase;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UCameraComponent* Camera;
+	class UCameraComponent* Camera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		int32 NumOfWhite;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 Size;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		int32 NumOfBlack;
+	// Update board size and camera
+	UFUNCTION(BlueprintCallable)
+	void UpdateBoard(int32 SelectedSize);	
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	void DiscCounter();	// Count Black and White Disc
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	// Update board size and camera
-	void UpdateBoard();
-
-	// Count Black and White Disc
-	void DiscCounter();
+	/*
+	* AI
+	*/
+	void AIMove();
 
 private:
-	int32 Size;
+	class AReversiGameModeBase* GM;
+
+	// Board setting
 	float TileSpacing;
 	float BoardPadding;
 	float ScaleValue;
 	float CamHeight;
+
+	// AI
+	int32 Gain;
+	class AReversiTile* SelectedTile;
 };

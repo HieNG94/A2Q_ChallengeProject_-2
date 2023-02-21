@@ -3,6 +3,7 @@
 
 #include "ReversiBase.h"
 #include "ReversiTile.h"
+#include "ReversiGameModeBase.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Camera/CameraComponent.h"
@@ -33,15 +34,54 @@ AReversiBase::AReversiBase()
 		BoardBase->SetMaterial(0, BaseMaterial.Object);
 	}
 
-	UpdateBoard();
-
-	//RAI = CreateDefaultSubobject<AReversiAI>(TEXT("AIPlayer"));
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(BoardBase);
 }
 
-// Called when the game starts or when spawned
 void AReversiBase::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GM = (AReversiGameModeBase*)GetWorld()->GetAuthGameMode();
+
+	if (!GM) { return; }
+}
+
+// Called every frame
+void AReversiBase::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	DiscCounter();
+
+	if (GM->GetTurn() == 1)
+	{
+		AIMove();
+	}
+}
+
+void AReversiBase::UpdateBoard(int32 SelectedSize)
+{
+	// Set default
+	Size = SelectedSize;
+	TileSpacing = 80.f;
+	BoardPadding = 90.f;
+	ScaleValue = (Size * TileSpacing + BoardPadding) / 400.f;
+	CamHeight = 200 * ScaleValue + 50.f;
+
+	// Update board
+	BoardBase->SetRelativeScale3D(FVector(ScaleValue, ScaleValue, 2.f));
+	BoardBase->SetRelativeRotation(FRotator(0.f));
+	BoardBase->SetRelativeLocation(FVector(0.f));
+
+	/*
+		Set up the top down camera
+		The height depend on the board size. For example, the board size is 8x8.
+		Each tile is 20.f. The whole board will be around 200.f. Then the height
+		of the camera will be 200.f + 10.f offset.
+	*/
+	Camera->SetRelativeRotation(FRotator(-90.f, -90.f, 0.f));
+	Camera->SetRelativeLocation(FVector(200.f, 200.f, CamHeight));
 
 	int32 NumOfTiles = Size * Size;
 	int32 LowerRight = Size * (Size / 2) + (Size / 2); // get 4 centered tiles
@@ -73,58 +113,46 @@ void AReversiBase::BeginPlay()
 	}
 }
 
-// Called every frame
-void AReversiBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	DiscCounter();
-}
-
-// Called to bind functionality to input
-void AReversiBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
-void AReversiBase::UpdateBoard()
-{
-	// Set default
-	Size = 8;
-	TileSpacing = 80.f;
-	BoardPadding = 90.f;
-	ScaleValue = (Size * TileSpacing + BoardPadding) / 400.f;
-	CamHeight = 200 * ScaleValue + 50.f;
-
-	// Update board
-	BoardBase->SetRelativeScale3D(FVector(ScaleValue, ScaleValue, 2.f));
-	BoardBase->SetRelativeRotation(FRotator(0.f));
-	BoardBase->SetRelativeLocation(FVector(0.f));
-
-	/*
-		Set up the top down camera
-		The height depend on the board size. For example, the board size is 8x8.
-		Each tile is 20.f. The whole board will be around 200.f. Then the height
-		of the camera will be 200.f + 10.f offset.
-	*/
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
-	Camera->SetupAttachment(BoardBase);
-	Camera->SetRelativeRotation(FRotator(-90.f, -90.f, 0.f));
-	Camera->SetRelativeLocation(FVector(200.f, 200.f, CamHeight));
-}
-
 void AReversiBase::DiscCounter()
 {
-	NumOfWhite = 0;
-	NumOfBlack = 0;
 	TArray<FHitResult>BoxHit;
 	FVector Location = FVector((GetActorLocation().X + Size / 2.f) * 100.f, (GetActorLocation().Y + Size / 2.f) * 100.f, GetActorLocation().Z);
 
 	// Cast a box trace to count disc
 	UKismetSystemLibrary::BoxTraceMultiByProfile(GetWorld(), Location, Location, FVector(Size * 50.f), FRotator(0.f), TEXT("Pawn"), true, {}, EDrawDebugTrace::None, BoxHit, true);
 
-	NumOfWhite = FHitResult::GetNumBlockingHits(BoxHit);
-	NumOfBlack = FHitResult::GetNumOverlapHits(BoxHit);
+	GM->SetNumOfWhiteDisc(FHitResult::GetNumBlockingHits(BoxHit));
+	GM->SetNumOfBlackDisc(FHitResult::GetNumOverlapHits(BoxHit));
+}
+
+/*******************************************************************************
+*
+* AI
+*
+********************************************************************************/
+
+void AReversiBase::AIMove()
+{
+	Gain = 0;
+	TArray<FHitResult>BoxHit;
+	FVector Location = FVector((GetActorLocation().X + Size / 2.f) * 100.f, (GetActorLocation().Y + Size / 2.f) * 100.f, GetActorLocation().Z);
+
+	// Cast a box trace to count disc
+	UKismetSystemLibrary::BoxTraceMultiByProfile(GetWorld(), Location, Location, FVector(Size * 50.f), FRotator(0.f), TEXT("Vehicle"), true, {}, EDrawDebugTrace::None, BoxHit, true);
+
+	for (const auto& Hit : BoxHit)
+	{
+		AReversiTile* CurrentTile = Cast<AReversiTile>(Hit.Actor);
+		if (CurrentTile)
+		{
+			CurrentTile->CheckMove();
+			if (CurrentTile->GetNumOfHit() > Gain)
+			{
+				Gain = CurrentTile->GetNumOfHit();
+				SelectedTile = CurrentTile;
+			}
+		}
+	}
+	SelectedTile->PlaceDisc();
 }
 

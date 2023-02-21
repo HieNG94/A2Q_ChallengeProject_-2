@@ -8,14 +8,23 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class UUserWidget;
 #ifdef REVERSI_ReversiGameModeBase_generated_h
 #error "ReversiGameModeBase.generated.h already included, missing '#pragma once' in ReversiGameModeBase.h"
 #endif
 #define REVERSI_ReversiGameModeBase_generated_h
 
 #define Reversi_Source_Reversi_ReversiGameModeBase_h_15_SPARSE_DATA
-#define Reversi_Source_Reversi_ReversiGameModeBase_h_15_RPC_WRAPPERS
-#define Reversi_Source_Reversi_ReversiGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS
+#define Reversi_Source_Reversi_ReversiGameModeBase_h_15_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execChangeMenuWidget);
+
+
+#define Reversi_Source_Reversi_ReversiGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execChangeMenuWidget);
+
+
 #define Reversi_Source_Reversi_ReversiGameModeBase_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAReversiGameModeBase(); \
@@ -58,7 +67,11 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AReversiGameModeBase)
 
 
-#define Reversi_Source_Reversi_ReversiGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET
+#define Reversi_Source_Reversi_ReversiGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET \
+	FORCEINLINE static uint32 __PPO__WidgetClasses() { return STRUCT_OFFSET(AReversiGameModeBase, WidgetClasses); } \
+	FORCEINLINE static uint32 __PPO__CurrentWidget() { return STRUCT_OFFSET(AReversiGameModeBase, CurrentWidget); }
+
+
 #define Reversi_Source_Reversi_ReversiGameModeBase_h_12_PROLOG
 #define Reversi_Source_Reversi_ReversiGameModeBase_h_15_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \

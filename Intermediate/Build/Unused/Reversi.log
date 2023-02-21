@@ -1,11 +1,14 @@
-﻿  Building ReversiEditor and ShaderCompileWorker...
+﻿  Using 'git status' to determine working set for adaptive non-unity build (C:\Unreal Project\Reversi).
+  Deleted hot-reload file: C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi-0001.lib
+  Deleted hot-reload file: C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi-0002.lib
+  Deleted hot-reload file: C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi-0003.lib
+  Building ReversiEditor and ShaderCompileWorker...
   Using Visual Studio 2022 14.34.31942 toolchain (C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933) and Windows 10.0.18362.0 SDK (C:\Program Files (x86)\Windows Kits\10).
-  Building 4 actions with 16 processes...
-    [1/4] ReversiBase.cpp
-    [2/4] UE4Editor-Reversi-0007.lib
-       Creating library C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi-0007.lib and object C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi-0007.exp
-    [3/4] UE4Editor-Reversi-0007.dll
-       Creating library C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi-0007.suppressed.lib and object C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi-0007.suppressed.exp
-    [4/4] ReversiEditor.target
-  Total time in Parallel executor: 0.97 seconds
-  Total execution time: 1.91 seconds
+  Building 3 actions with 16 processes...
+    [1/3] UE4Editor-Reversi.lib
+       Creating library C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi.lib and object C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi.exp
+    [2/3] UE4Editor-Reversi.dll
+       Creating library C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi.suppressed.lib and object C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\UE4Editor-Reversi.suppressed.exp
+    [3/3] ReversiEditor.target
+  Total time in Parallel executor: 0.57 seconds
+  Total execution time: 1.37 seconds

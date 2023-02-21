@@ -3,6 +3,12 @@ C:\Unreal Project\Reversi\Source\Reversi\ReversiBase.h
 C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiBase.generated.h
 C:\Unreal Project\Reversi\Source\Reversi\ReversiTile.h
 C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiTile.generated.h
+C:\Unreal Project\Reversi\Source\Reversi\ReversiGameModeBase.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiGameModeBase.generated.h
 C:\UnrealEngine-4.27\Engine\Source\Runtime\Engine\Classes\Kismet/KismetSystemLibrary.h
 C:\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/PropertyAccessUtil.h
 C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\KismetSystemLibrary.generated.h

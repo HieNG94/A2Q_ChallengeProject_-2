@@ -115,10 +115,6 @@ void AReversiTile::CheckMove()
 			{
 				PlaceDisc();
 			}
-			else
-			{
-
-			}
 		}
 	}
 }
@@ -188,9 +184,7 @@ void AReversiTile::PlaceDisc()
 	{
 		PlaceBlackDisc();
 	}
-
 	UpdateDiscs();
-	GM->UpdateTurn();
 }
 
 void AReversiTile::PlaceWhiteDisc()
@@ -227,6 +221,12 @@ void AReversiTile::UpdateDiscs()
 		}
 	}
 	AllHitTarget.Empty();
+	GM->UpdateTurn();
+}
+
+int32 AReversiTile::GetNumOfHit()
+{
+	return AllHitTarget.Num();
 }
 
 void AReversiTile::TileClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)

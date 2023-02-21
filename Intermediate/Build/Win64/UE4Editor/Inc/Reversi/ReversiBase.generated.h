@@ -14,8 +14,16 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define REVERSI_ReversiBase_generated_h
 
 #define Reversi_Source_Reversi_ReversiBase_h_12_SPARSE_DATA
-#define Reversi_Source_Reversi_ReversiBase_h_12_RPC_WRAPPERS
-#define Reversi_Source_Reversi_ReversiBase_h_12_RPC_WRAPPERS_NO_PURE_DECLS
+#define Reversi_Source_Reversi_ReversiBase_h_12_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execUpdateBoard);
+
+
+#define Reversi_Source_Reversi_ReversiBase_h_12_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execUpdateBoard);
+
+
 #define Reversi_Source_Reversi_ReversiBase_h_12_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAReversiBase(); \

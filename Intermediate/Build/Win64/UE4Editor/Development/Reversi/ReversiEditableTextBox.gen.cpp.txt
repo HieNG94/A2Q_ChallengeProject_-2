@@ -1,0 +1,21 @@
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Development\Reversi\Definitions.Reversi.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/GeneratedCppIncludes.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/MetaData.h
+C:\Unreal Project\Reversi\Source\Reversi/ReversiEditableTextBox.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\UMG\Public\Components/EditableTextBox.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\UMG\Public\Components/Widget.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\UMG\Public\Components/Visual.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Visual.generated.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\UMG\Public\Components/SlateWrapperTypes.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\SlateWrapperTypes.generated.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\UMG\Public\Slate/WidgetTransform.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetTransform.generated.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\UMG\Public\Blueprint/WidgetNavigation.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\SlateCore\Public\Types/NavigationMetaData.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetNavigation.generated.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Widget.generated.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\UMG\Public\Components/TextWidgetTypes.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\TextWidgetTypes.generated.h
+C:\UnrealEngine-4.27\Engine\Source\Runtime\Slate\Public\Widgets/Text/ISlateEditableTextWidget.h
+C:\UnrealEngine-4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\EditableTextBox.generated.h
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiEditableTextBox.generated.h
