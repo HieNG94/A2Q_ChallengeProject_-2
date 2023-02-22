@@ -47,19 +47,11 @@ void AReversiBase::BeginPlay()
 	if (!GM) { return; }
 }
 
-// Called every frame
-void AReversiBase::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	DiscCounter();
-
-	if (GM->GetTurn() == 1)
-	{
-		AIMove();
-	}
-}
-
+/*******************************************************************************
+*
+* Update the size of board, spawn tiles, and update camera position.
+*
+********************************************************************************/
 void AReversiBase::UpdateBoard(int32 SelectedSize)
 {
 	// Set default
@@ -111,8 +103,14 @@ void AReversiBase::UpdateBoard(int32 SelectedSize)
 			}
 		}
 	}
+	DiscCounter();
 }
 
+/*******************************************************************************
+*
+* Count the numbers of black and white discs.
+*
+********************************************************************************/
 void AReversiBase::DiscCounter()
 {
 	TArray<FHitResult>BoxHit;
@@ -131,9 +129,10 @@ void AReversiBase::DiscCounter()
 *
 ********************************************************************************/
 
-void AReversiBase::AIMove()
+void AReversiBase::CheckValidMove()
 {
 	Gain = 0;
+	SelectedTile = nullptr;
 	TArray<FHitResult>BoxHit;
 	FVector Location = FVector((GetActorLocation().X + Size / 2.f) * 100.f, (GetActorLocation().Y + Size / 2.f) * 100.f, GetActorLocation().Z);
 
@@ -145,7 +144,8 @@ void AReversiBase::AIMove()
 		AReversiTile* CurrentTile = Cast<AReversiTile>(Hit.Actor);
 		if (CurrentTile)
 		{
-			CurrentTile->CheckMove();
+			// Check all valid moves and get the most-gained move.
+			CurrentTile->CheckValidMove();
 			if (CurrentTile->GetNumOfHit() > Gain)
 			{
 				Gain = CurrentTile->GetNumOfHit();
@@ -153,6 +153,19 @@ void AReversiBase::AIMove()
 			}
 		}
 	}
-	SelectedTile->PlaceDisc();
+	if (SelectedTile && GM->GetTurn() == 1)
+	{
+		GetWorldTimerManager().SetTimer(AIDelay, this, &AReversiBase::AIMove, Delay, false, Delay);
+	}
+	else if (!SelectedTile)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Finished"));
+		GM->EndGame();
+	}
 }
 
+void AReversiBase::AIMove()
+{
+	SelectedTile->PlaceDisc();
+	GetWorldTimerManager().ClearTimer(AIDelay);
+}

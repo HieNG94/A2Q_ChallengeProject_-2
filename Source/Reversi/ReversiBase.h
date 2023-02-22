@@ -32,14 +32,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 	void DiscCounter();	// Count Black and White Disc
-
-	/*
-	* AI
-	*/
-	void AIMove();
+	void CheckValidMove();	// Check all remain valid moves
+	void AIMove();		// AI
 
 private:
 	class AReversiGameModeBase* GM;
@@ -52,5 +47,7 @@ private:
 
 	// AI
 	int32 Gain;
+	float Delay = 2.f;
 	class AReversiTile* SelectedTile;
+	FTimerHandle AIDelay;
 };

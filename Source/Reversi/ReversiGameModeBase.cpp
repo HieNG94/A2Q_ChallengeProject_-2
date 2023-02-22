@@ -19,9 +19,9 @@ void AReversiGameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (WidgetClasses.Num() > 0)
+	if (StartingWidgetClass)
 	{
-		ChangeMenuWidget(WidgetClasses[0]);
+		ChangeMenuWidget(StartingWidgetClass);
 	}
 }
 
@@ -42,9 +42,31 @@ void AReversiGameModeBase::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetCl
 	}
 }
 
+void AReversiGameModeBase::GetGameBoard()
+{
+	TArray<AActor*> FoundActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AReversiBase::StaticClass(), FoundActor);
+
+	if (FoundActor.Num() > 0)
+	{
+		Board = Cast<AReversiBase>(FoundActor[0]);
+
+		if (!Board) { return; }
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Cannot find game board!!!"));
+		return;
+	}
+}
+
 void AReversiGameModeBase::UpdateTurn()
 {
+	// Max timer per turn
 	GetWorldTimerManager().SetTimer(TimeLimitPerTurn, this, &AReversiGameModeBase::SwitchTurn, TimeLimit, true, 0.f);
+
+	// The timer display on widget
+	GetWorldTimerManager().SetTimer(TimeCounter, this, &AReversiGameModeBase::UpdateWidgetTimer, 0.1, true, 0.f);
 }
 
 void AReversiGameModeBase::SwitchTurn()
@@ -57,6 +79,9 @@ void AReversiGameModeBase::SwitchTurn()
 	{
 		Turn = 0;
 	}
+	Board->CheckValidMove();
+	WidgetTimer = TimeLimit;
+	Board->DiscCounter();
 }
 
 int8 AReversiGameModeBase::GetTurn()
@@ -77,4 +102,23 @@ void AReversiGameModeBase::SetNumOfWhiteDisc(int32 Num)
 void AReversiGameModeBase::SetTimeLimit(float Time)
 {
 	TimeLimit = Time;
+	WidgetTimer = Time;
+}
+
+void AReversiGameModeBase::UpdateWidgetTimer()
+{
+	WidgetTimer -= 0.1f;
+}
+
+void AReversiGameModeBase::EndGame()
+{
+	Board->DiscCounter();
+	GetWorldTimerManager().ClearTimer(TimeLimitPerTurn);
+	GetWorldTimerManager().ClearTimer(TimeCounter);
+
+	if (EndingWidgetClass)
+	{
+		ChangeMenuWidget(EndingWidgetClass);
+	}
+	UE_LOG(LogTemp, Warning, TEXT("blk: %d || wht: %d"), BlackDisc, WhiteDisc);
 }

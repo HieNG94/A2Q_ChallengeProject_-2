@@ -66,14 +66,25 @@ void AReversiTile::BeginPlay()
 	if (!GM) { return; }
 }
 
-// Called every frame
-void AReversiTile::Tick(float DeltaTime)
+/*******************************************************************************
+*
+* Check valid move
+*
+********************************************************************************/
+void AReversiTile::PlayerMove()
 {
-	Super::Tick(DeltaTime);
+	CheckValidMove();
 
+	if (AllHitTarget.Num() > 0)
+	{
+		if (GM->GetTurn() == 0)
+		{
+			PlaceDisc();
+		}
+	}
 }
 
-void AReversiTile::CheckMove()
+void AReversiTile::CheckValidMove()
 {
 	TArray<FHitResult> BoxHit;
 	UKismetSystemLibrary::BoxTraceMultiByProfile(GetWorld(), GetActorLocation(), GetActorLocation(), FVector(80.f), FRotator(0.f), TEXT("Pawn"), true, { this }, EDrawDebugTrace::None, BoxHit, true);
@@ -92,7 +103,7 @@ void AReversiTile::CheckMove()
 			// Line trace to check if there is empty space 
 			UKismetSystemLibrary::LineTraceSingleByProfile(GetWorld(), GetActorLocation(), End, TEXT("Vehicle"), true, { this }, EDrawDebugTrace::None, LineToEmptyTileHit, true);
 
-			if (LineHit.Num() > 1 && LineHit[LineHit.Num() - 1].IsValidBlockingHit())
+			if (LineHit.Num() > 1 && FHitResult::GetNumBlockingHits(LineHit) == 1)
 			{
 				float Dist = FVector::Distance(GetActorLocation(), LineHit[LineHit.Num() - 1].Location);
 				float DistToEmpty = FVector::Distance(GetActorLocation(), LineToEmptyTileHit.Location);
@@ -109,16 +120,14 @@ void AReversiTile::CheckMove()
 				}
 			}
 		}
-		if (AllHitTarget.Num() > 0)
-		{
-			if (GM->GetTurn() == 0)
-			{
-				PlaceDisc();
-			}
-		}
 	}
 }
 
+/*******************************************************************************
+*
+* Get collision profile and end position for line trace
+*
+********************************************************************************/
 void AReversiTile::SetTraceProfile()
 {
 	if (GM->GetTurn() == 0)
@@ -135,45 +144,51 @@ FVector AReversiTile::GetLineTraceEnd(int8 Index)
 {
 	float DesX = 0;
 	float DesY = 0;
+	float Length = 4000.f;
 	switch (Index)
 	{
 	case 0:
-		DesX = 2000.f;
+		DesX = Length;
 		DesY = 0.f;
 		break;
 	case 1:
-		DesX = 2000.f;
-		DesY = 2000.f;
+		DesX = Length;
+		DesY = Length;
 		break;
 	case 2:
 		DesX = 0.f;
-		DesY = 2000.f;
+		DesY = Length;
 		break;
 	case 3:
-		DesX = -2000.f;
-		DesY = 2000.f;
+		DesX = -Length;
+		DesY = Length;
 		break;
 	case 4:
-		DesX = -2000.f;
+		DesX = -Length;
 		DesY = 0.f;
 		break;
 	case 5:
-		DesX = -2000.f;
-		DesY = -2000.f;
+		DesX = -Length;
+		DesY = -Length;
 		break;
 	case 6:
 		DesX = 0.f;
-		DesY = -2000.f;
+		DesY = -Length;
 		break;
 	case 7:
-		DesX = 2000.f;
-		DesY = -2000.f;
+		DesX = Length;
+		DesY = -Length;
 		break;
 	}
 
 	return FVector(GetActorLocation().X + DesX, GetActorLocation().Y + DesY, GetActorLocation().Z);
 }
 
+/*******************************************************************************
+*
+* Place discs
+*
+********************************************************************************/
 void AReversiTile::PlaceDisc()
 {
 	if (GM->GetTurn() == 0)
@@ -203,6 +218,11 @@ void AReversiTile::PlaceBlackDisc()
 	IsPlaced = true;
 }
 
+/*******************************************************************************
+*
+* Update all discs in the complete paths after a new move.
+*
+********************************************************************************/
 void AReversiTile::UpdateDiscs()
 {
 	for (const auto& Hit : AllHitTarget)
@@ -218,21 +238,73 @@ void AReversiTile::UpdateDiscs()
 			{
 				TileTarget->PlaceBlackDisc();
 			}
+			TileTarget->CastAnim();
 		}
 	}
 	AllHitTarget.Empty();
+	GetWorldTimerManager().ClearTimer(FlipTimer);
 	GM->UpdateTurn();
 }
 
+/*******************************************************************************
+*
+* Get the size of AllHitTarget array
+*
+********************************************************************************/
 int32 AReversiTile::GetNumOfHit()
 {
 	return AllHitTarget.Num();
 }
 
+
+/*******************************************************************************
+*
+* Trigger OnClicked
+*
+********************************************************************************/
 void AReversiTile::TileClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
 	if (!IsPlaced)
 	{
-		CheckMove();
+		PlayerMove();
+	}
+}
+
+/*******************************************************************************
+*
+* Flip Animation
+*
+********************************************************************************/
+
+void AReversiTile::CastAnim()
+{
+	IsFlipped = false;
+	GetWorldTimerManager().SetTimer(FlipTimer, this, &AReversiTile::FlipAnimation, 0.1f, true, 0.f);
+}
+
+void AReversiTile::FlipAnimation()
+{
+	if(!IsFlipped)
+	{
+		Counter++;
+		if (Counter <= 5)
+		{
+
+			Disc->SetRelativeLocation(FVector(Disc->GetRelativeLocation().X, Disc->GetRelativeLocation().Y, Disc->GetRelativeLocation().Z + (FlipTimeCounter * 50.f)));
+			FlipTimeCounter++;
+		}
+		else
+		{
+			FlipTimeCounter--;
+
+			Disc->SetRelativeLocation(FVector(Disc->GetRelativeLocation().X, Disc->GetRelativeLocation().Y, Disc->GetRelativeLocation().Z - (FlipTimeCounter * 50.f)));
+		}
+	}
+	if (Counter > 10)
+	{
+		IsFlipped = true;
+		Counter = 0;
+		FlipTimeCounter = 0;
+		Disc->SetRelativeLocation(FVector(0.f, 0.f, 100.f));
 	}
 }

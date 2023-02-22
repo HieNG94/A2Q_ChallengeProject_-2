@@ -17,11 +17,15 @@ class UUserWidget;
 #define Reversi_Source_Reversi_ReversiGameModeBase_h_15_SPARSE_DATA
 #define Reversi_Source_Reversi_ReversiGameModeBase_h_15_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execSetTimeLimit); \
+	DECLARE_FUNCTION(execGetGameBoard); \
 	DECLARE_FUNCTION(execChangeMenuWidget);
 
 
 #define Reversi_Source_Reversi_ReversiGameModeBase_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execSetTimeLimit); \
+	DECLARE_FUNCTION(execGetGameBoard); \
 	DECLARE_FUNCTION(execChangeMenuWidget);
 
 
@@ -68,7 +72,8 @@ public: \
 
 
 #define Reversi_Source_Reversi_ReversiGameModeBase_h_15_PRIVATE_PROPERTY_OFFSET \
-	FORCEINLINE static uint32 __PPO__WidgetClasses() { return STRUCT_OFFSET(AReversiGameModeBase, WidgetClasses); } \
+	FORCEINLINE static uint32 __PPO__StartingWidgetClass() { return STRUCT_OFFSET(AReversiGameModeBase, StartingWidgetClass); } \
+	FORCEINLINE static uint32 __PPO__EndingWidgetClass() { return STRUCT_OFFSET(AReversiGameModeBase, EndingWidgetClass); } \
 	FORCEINLINE static uint32 __PPO__CurrentWidget() { return STRUCT_OFFSET(AReversiGameModeBase, CurrentWidget); }
 
 

@@ -27,12 +27,30 @@ public:
 	UPROPERTY(BluePrintReadWrite)
 	int32 WhiteDisc = 0;
 
+	UPROPERTY(BluePrintReadWrite)
+	float TimeLimit = 0.f;
+
+	UPROPERTY(BluePrintReadWrite)
+	float WidgetTimer = 0.f;
+
+	UPROPERTY(BluePrintReadWrite)
+	int32 Turn = 0;
+
+	UFUNCTION(BluePrintCallable)
+	void GetGameBoard();
+
+	UFUNCTION(BluePrintCallable)
+	void SetTimeLimit(float Time);
+
 protected:
 	virtual void BeginPlay() override;
 
 	/** The widget class we will use as our menu when the game starts. */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG Game")
-	TArray<TSubclassOf<UUserWidget>> WidgetClasses;
+	TSubclassOf<UUserWidget>StartingWidgetClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "UMG Game")
+	TSubclassOf<UUserWidget>EndingWidgetClass;
 
 	/** The widget instance that we are using as our menu. */
 	UPROPERTY()
@@ -44,10 +62,11 @@ public:
 	int8 GetTurn();
 	void SetNumOfBlackDisc(int32 Num);
 	void SetNumOfWhiteDisc(int32 Num);
-	void SetTimeLimit(float Time);
+	void UpdateWidgetTimer();
+	void EndGame();
 
 private:
-	int8 Turn = 0;
-	float TimeLimit = 5.f;
 	FTimerHandle TimeLimitPerTurn;
+	FTimerHandle TimeCounter;
+	class AReversiBase* Board;
 };

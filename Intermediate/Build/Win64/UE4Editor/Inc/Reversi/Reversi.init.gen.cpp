@@ -21,7 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeReversi_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x0E71F819,
+				0x039AF99C,
 				0x48D707E4,
 				METADATA_PARAMS(nullptr, 0)
 			};

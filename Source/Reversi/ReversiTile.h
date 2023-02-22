@@ -11,27 +11,29 @@ class REVERSI_API AReversiTile : public APawn
 {
 	GENERATED_BODY()
 
-		UPROPERTY(VisibleDefaultsOnly)
-		class UStaticMeshComponent* Tile;
+	UPROPERTY(VisibleDefaultsOnly)
+	class UStaticMeshComponent* Tile;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UStaticMeshComponent* Disc;
+	class UStaticMeshComponent* Disc;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UBoxComponent* BoxComponent;
+	class UBoxComponent* BoxComponent;
 
 public:
 	// Sets default values for this pawn's properties
 	AReversiTile();
+
+	UFUNCTION()
+	void TileClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-	void CheckMove();
+	void PlayerMove();
+	void CheckValidMove();
 	void SetTraceProfile();
 	FVector GetLineTraceEnd(int8 index);
 	void PlaceDisc();
@@ -40,8 +42,9 @@ public:
 	void UpdateDiscs();
 	int32 GetNumOfHit();
 
-	UFUNCTION()
-		void TileClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked);
+	// Animation
+	void CastAnim();
+	void FlipAnimation();
 
 private:
 	class AReversiGameModeBase* GM;
@@ -51,6 +54,9 @@ private:
 	FName TraceProfile;
 	TArray<FHitResult>AllHitTarget;
 
-public:
-	FORCEINLINE class UStaticMeshComponent* GetDiscMesh() const { return Disc; }
+	// Animation
+	bool IsFlipped = false;
+	int8 Counter = 0;
+	float FlipTimeCounter = 0.f;
+	FTimerHandle FlipTimer;
 };
