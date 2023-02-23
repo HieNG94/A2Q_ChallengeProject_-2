@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
 AReversiTile::AReversiTile()
@@ -55,6 +56,19 @@ AReversiTile::AReversiTile()
 		BlackDisc = BDisc.Object;
 	}
 	Disc->SetVisibility(false);
+	InitRot = Disc->GetRelativeRotation();
+
+	// Particle system
+	PrevMoveParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("PrevMoveParticles"));
+	PrevMoveParticleSystem->SetupAttachment(Tile);
+	PrevMoveParticleSystem->bAutoActivate = false;
+	PrevMoveParticleSystem->SetRelativeLocation(FVector(0.0f, 0.0f, 150.0f));
+	PrevMoveParticleSystem->SetRelativeScale3D(FVector(1.f));
+	static ConstructorHelpers::FObjectFinder<UParticleSystem> ParticleAsset1(TEXT("ParticleSystem'/Game/Reversi/Particles/P_Fire.P_Fire'"));
+	if (ParticleAsset1.Succeeded())
+	{
+		PrevMoveParticleSystem->SetTemplate(ParticleAsset1.Object);
+	}
 }
 
 // Called when the game starts or when spawned
@@ -86,6 +100,7 @@ void AReversiTile::PlayerMove()
 
 void AReversiTile::CheckValidMove()
 {
+	AllHitTarget.Empty();
 	TArray<FHitResult> BoxHit;
 	UKismetSystemLibrary::BoxTraceMultiByProfile(GetWorld(), GetActorLocation(), GetActorLocation(), FVector(80.f), FRotator(0.f), TEXT("Pawn"), true, { this }, EDrawDebugTrace::None, BoxHit, true);
 
@@ -106,7 +121,15 @@ void AReversiTile::CheckValidMove()
 			if (LineHit.Num() > 1 && FHitResult::GetNumBlockingHits(LineHit) == 1)
 			{
 				float Dist = FVector::Distance(GetActorLocation(), LineHit[LineHit.Num() - 1].Location);
-				float DistToEmpty = FVector::Distance(GetActorLocation(), LineToEmptyTileHit.Location);
+				float DistToEmpty;
+				if (LineToEmptyTileHit.Actor.IsValid())
+				{
+					DistToEmpty = FVector::Distance(GetActorLocation(), LineToEmptyTileHit.Location);
+				}
+				else
+				{
+					DistToEmpty = Length;
+				}
 
 				if (Dist < DistToEmpty)
 				{
@@ -144,7 +167,6 @@ FVector AReversiTile::GetLineTraceEnd(int8 Index)
 {
 	float DesX = 0;
 	float DesY = 0;
-	float Length = 4000.f;
 	switch (Index)
 	{
 	case 0:
@@ -191,15 +213,25 @@ FVector AReversiTile::GetLineTraceEnd(int8 Index)
 ********************************************************************************/
 void AReversiTile::PlaceDisc()
 {
-	if (GM->GetTurn() == 0)
+	if (!GM->GetIsEnd())
 	{
-		PlaceWhiteDisc();
+		EndTurn = true;
+		if (GM->GetTurn() == 0)
+		{
+			PlaceWhiteDisc();
+		}
+		else
+		{
+			PlaceBlackDisc();
+		}
+		PlayParticleSystem();
+		if (GM->GetPrevTile())
+		{
+			GM->GetPrevTile()->PlayParticleSystem();
+		}
+		GM->SetPrevTile(this);
+		UpdateDiscs();
 	}
-	else
-	{
-		PlaceBlackDisc();
-	}
-	UpdateDiscs();
 }
 
 void AReversiTile::PlaceWhiteDisc()
@@ -238,12 +270,10 @@ void AReversiTile::UpdateDiscs()
 			{
 				TileTarget->PlaceBlackDisc();
 			}
-			TileTarget->CastAnim();
+			TileTarget->CastAnimation();
 		}
 	}
-	AllHitTarget.Empty();
-	GetWorldTimerManager().ClearTimer(FlipTimer);
-	GM->UpdateTurn();
+	GetWorldTimerManager().SetTimer(StopAnimTimer, this, &AReversiTile::StopAnimation, 2.f, true, 0.f);
 }
 
 /*******************************************************************************
@@ -264,7 +294,7 @@ int32 AReversiTile::GetNumOfHit()
 ********************************************************************************/
 void AReversiTile::TileClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClicked)
 {
-	if (!IsPlaced)
+	if (!IsPlaced && !EndTurn)
 	{
 		PlayerMove();
 	}
@@ -276,35 +306,48 @@ void AReversiTile::TileClicked(UPrimitiveComponent* ClickedComp, FKey ButtonClic
 *
 ********************************************************************************/
 
-void AReversiTile::CastAnim()
+void AReversiTile::CastAnimation()
 {
 	IsFlipped = false;
-	GetWorldTimerManager().SetTimer(FlipTimer, this, &AReversiTile::FlipAnimation, 0.1f, true, 0.f);
+	GetWorldTimerManager().SetTimer(FlipTimer, this, &AReversiTile::FlipAnimation, 0.01f, true, 0.f);
 }
 
 void AReversiTile::FlipAnimation()
 {
-	if(!IsFlipped)
+	if (!IsFlipped)
 	{
 		Counter++;
-		if (Counter <= 5)
+		if (Counter <= 50)
 		{
-
-			Disc->SetRelativeLocation(FVector(Disc->GetRelativeLocation().X, Disc->GetRelativeLocation().Y, Disc->GetRelativeLocation().Z + (FlipTimeCounter * 50.f)));
-			FlipTimeCounter++;
+			Disc->SetRelativeLocation(FVector(Disc->GetRelativeLocation().X, Disc->GetRelativeLocation().Y, Disc->GetRelativeLocation().Z + 10.f));
 		}
 		else
 		{
-			FlipTimeCounter--;
-
-			Disc->SetRelativeLocation(FVector(Disc->GetRelativeLocation().X, Disc->GetRelativeLocation().Y, Disc->GetRelativeLocation().Z - (FlipTimeCounter * 50.f)));
+			Disc->SetRelativeLocation(FVector(Disc->GetRelativeLocation().X, Disc->GetRelativeLocation().Y, Disc->GetRelativeLocation().Z - 10.f));
 		}
+		Disc->SetRelativeRotation(FRotator(Disc->GetRelativeRotation().Pitch, Disc->GetRelativeRotation().Roll + 3.6f, Disc->GetRelativeRotation().Yaw));
 	}
-	if (Counter > 10)
+	if (Counter > 100)
 	{
 		IsFlipped = true;
 		Counter = 0;
-		FlipTimeCounter = 0;
+		Disc->SetRelativeRotation(InitRot);
 		Disc->SetRelativeLocation(FVector(0.f, 0.f, 100.f));
+	}
+}
+
+void AReversiTile::StopAnimation()
+{
+	GetWorldTimerManager().ClearTimer(FlipTimer);
+	GetWorldTimerManager().ClearTimer(StopAnimTimer);
+	GM->UpdateTurn();
+	EndTurn = false;
+}
+
+void AReversiTile::PlayParticleSystem()
+{
+	if (PrevMoveParticleSystem && PrevMoveParticleSystem->Template)
+	{
+		PrevMoveParticleSystem->ToggleActive();
 	}
 }

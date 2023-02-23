@@ -3,6 +3,8 @@ C:\Unreal Project\Reversi\Source\Reversi\ReversiPlayerController.h
 C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiPlayerController.generated.h
 C:\Unreal Project\Reversi\Source\Reversi\ReversiBase.h
 C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiBase.generated.h
+C:\Unreal Project\Reversi\Source\Reversi\ReversiTile.h
+C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiTile.generated.h
 C:\Unreal Project\Reversi\Source\Reversi\ReversiStartMenu.h
 C:\Unreal Project\Reversi\Intermediate\Build\Win64\UE4Editor\Inc\Reversi\ReversiStartMenu.generated.h
 C:\Unreal Project\Reversi\Source\Reversi\ReversiGameModeBase.h

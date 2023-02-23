@@ -21,6 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeReversiTile() {}
 	INPUTCORE_API UScriptStruct* Z_Construct_UScriptStruct_FKey();
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UBoxComponent_NoRegister();
+	ENGINE_API UClass* Z_Construct_UClass_UParticleSystemComponent_NoRegister();
 // End Cross Module References
 	DEFINE_FUNCTION(AReversiTile::execTileClicked)
 	{
@@ -106,6 +107,10 @@ void EmptyLinkFunctionForGeneratedCodeReversiTile() {}
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_BoxComponent_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_BoxComponent;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_PrevMoveParticleSystem_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_PrevMoveParticleSystem;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
@@ -148,10 +153,18 @@ void EmptyLinkFunctionForGeneratedCodeReversiTile() {}
 	};
 #endif
 	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AReversiTile_Statics::NewProp_BoxComponent = { "BoxComponent", nullptr, (EPropertyFlags)0x00400000000b0009, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AReversiTile, BoxComponent), Z_Construct_UClass_UBoxComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AReversiTile_Statics::NewProp_BoxComponent_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AReversiTile_Statics::NewProp_BoxComponent_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AReversiTile_Statics::NewProp_PrevMoveParticleSystem_MetaData[] = {
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "ReversiTile.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AReversiTile_Statics::NewProp_PrevMoveParticleSystem = { "PrevMoveParticleSystem", nullptr, (EPropertyFlags)0x0040000000080008, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AReversiTile, PrevMoveParticleSystem), Z_Construct_UClass_UParticleSystemComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AReversiTile_Statics::NewProp_PrevMoveParticleSystem_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AReversiTile_Statics::NewProp_PrevMoveParticleSystem_MetaData)) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AReversiTile_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AReversiTile_Statics::NewProp_Tile,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AReversiTile_Statics::NewProp_Disc,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AReversiTile_Statics::NewProp_BoxComponent,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AReversiTile_Statics::NewProp_PrevMoveParticleSystem,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_AReversiTile_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<AReversiTile>::IsAbstract,
@@ -180,7 +193,7 @@ void EmptyLinkFunctionForGeneratedCodeReversiTile() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AReversiTile, 2920646529);
+	IMPLEMENT_CLASS(AReversiTile, 711846092);
 	template<> REVERSI_API UClass* StaticClass<AReversiTile>()
 	{
 		return AReversiTile::StaticClass();

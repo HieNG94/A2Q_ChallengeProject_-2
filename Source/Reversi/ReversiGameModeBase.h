@@ -59,14 +59,20 @@ protected:
 public:
 	void UpdateTurn();
 	void SwitchTurn();
+	void GameManager();
 	int8 GetTurn();
+	void SetPrevTile(class AReversiTile* Tile);
+	class AReversiTile* GetPrevTile();
 	void SetNumOfBlackDisc(int32 Num);
 	void SetNumOfWhiteDisc(int32 Num);
 	void UpdateWidgetTimer();
+	bool GetIsEnd();
 	void EndGame();
 
 private:
+	bool IsEnd = false;
 	FTimerHandle TimeLimitPerTurn;
 	FTimerHandle TimeCounter;
 	class AReversiBase* Board;
+	class AReversiTile* PrevTile;
 };

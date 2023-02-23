@@ -71,7 +71,8 @@ public: \
 #define Reversi_Source_Reversi_ReversiTile_h_12_PRIVATE_PROPERTY_OFFSET \
 	FORCEINLINE static uint32 __PPO__Tile() { return STRUCT_OFFSET(AReversiTile, Tile); } \
 	FORCEINLINE static uint32 __PPO__Disc() { return STRUCT_OFFSET(AReversiTile, Disc); } \
-	FORCEINLINE static uint32 __PPO__BoxComponent() { return STRUCT_OFFSET(AReversiTile, BoxComponent); }
+	FORCEINLINE static uint32 __PPO__BoxComponent() { return STRUCT_OFFSET(AReversiTile, BoxComponent); } \
+	FORCEINLINE static uint32 __PPO__PrevMoveParticleSystem() { return STRUCT_OFFSET(AReversiTile, PrevMoveParticleSystem); }
 
 
 #define Reversi_Source_Reversi_ReversiTile_h_9_PROLOG

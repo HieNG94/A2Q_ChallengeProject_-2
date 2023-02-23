@@ -2,6 +2,7 @@
 
 #include "ReversiPlayerController.h"
 #include "ReversiBase.h"
+#include "ReversiTile.h"
 #include "ReversiStartMenu.h"
 #include "ReversiGameModeBase.h"
 #include "Blueprint/UserWidget.h"
@@ -25,6 +26,11 @@ void AReversiGameModeBase::BeginPlay()
 	}
 }
 
+/*******************************************************************************
+*
+* Change Widget
+*
+********************************************************************************/
 void AReversiGameModeBase::ChangeMenuWidget(TSubclassOf<UUserWidget> NewWidgetClass)
 {
 	if (CurrentWidget != nullptr)
@@ -71,22 +77,44 @@ void AReversiGameModeBase::UpdateTurn()
 
 void AReversiGameModeBase::SwitchTurn()
 {
-	if (Turn == 0)
+	if(!IsEnd)
 	{
-		Turn = 1;
+		if (Turn == 0)
+		{
+			Turn = 1;
+		}
+		else
+		{
+			Turn = 0;
+		}
+		Board->DiscCounter();
+		GameManager();
+		WidgetTimer = TimeLimit;
 	}
-	else
+}
+
+void AReversiGameModeBase::GameManager()
+{
+	if (BlackDisc == 0 || WhiteDisc == 0)
 	{
-		Turn = 0;
+		EndGame();
 	}
 	Board->CheckValidMove();
-	WidgetTimer = TimeLimit;
-	Board->DiscCounter();
 }
 
 int8 AReversiGameModeBase::GetTurn()
 {
 	return Turn;
+}
+
+void AReversiGameModeBase::SetPrevTile(AReversiTile* Tile)
+{
+	PrevTile = Tile;
+}
+
+AReversiTile* AReversiGameModeBase::GetPrevTile()
+{
+	return PrevTile;
 }
 
 void AReversiGameModeBase::SetNumOfBlackDisc(int32 Num)
@@ -110,8 +138,14 @@ void AReversiGameModeBase::UpdateWidgetTimer()
 	WidgetTimer -= 0.1f;
 }
 
+bool AReversiGameModeBase::GetIsEnd()
+{
+	return IsEnd;
+}
+
 void AReversiGameModeBase::EndGame()
 {
+	IsEnd = true;
 	Board->DiscCounter();
 	GetWorldTimerManager().ClearTimer(TimeLimitPerTurn);
 	GetWorldTimerManager().ClearTimer(TimeCounter);
@@ -120,5 +154,4 @@ void AReversiGameModeBase::EndGame()
 	{
 		ChangeMenuWidget(EndingWidgetClass);
 	}
-	UE_LOG(LogTemp, Warning, TEXT("blk: %d || wht: %d"), BlackDisc, WhiteDisc);
 }

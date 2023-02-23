@@ -20,6 +20,9 @@ class REVERSI_API AReversiTile : public APawn
 	UPROPERTY(VisibleDefaultsOnly)
 	class UBoxComponent* BoxComponent;
 
+	UPROPERTY()
+	class UParticleSystemComponent* PrevMoveParticleSystem;
+
 public:
 	// Sets default values for this pawn's properties
 	AReversiTile();
@@ -43,20 +46,25 @@ public:
 	int32 GetNumOfHit();
 
 	// Animation
-	void CastAnim();
+	void CastAnimation();
 	void FlipAnimation();
+	void StopAnimation();
+	void PlayParticleSystem();
 
 private:
 	class AReversiGameModeBase* GM;
 	class UMaterial* WhiteDisc;
 	class UMaterial* BlackDisc;
 	bool IsPlaced = false;
+	bool EndTurn = false;
+	float Length = 4000.f;
 	FName TraceProfile;
 	TArray<FHitResult>AllHitTarget;
 
 	// Animation
+	FRotator InitRot;
 	bool IsFlipped = false;
 	int8 Counter = 0;
-	float FlipTimeCounter = 0.f;
 	FTimerHandle FlipTimer;
+	FTimerHandle StopAnimTimer;
 };
